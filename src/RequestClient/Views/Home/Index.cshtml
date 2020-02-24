@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<p>Enter your request:</p>
+
+<form method="post">
+    <textarea type="text" id="requestDescription" name="requestDescription"></textarea>
+    <input type="submit" asp-action="SendRequest"/>
+</form>
