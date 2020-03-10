@@ -45,7 +45,8 @@ namespace RequestClient.Controllers
                 ViewBag.TaskResult = "Отправлен пустой запрос";
                 return View();
             }
-            string taskResult = String.Empty;
+
+            string taskResult = "";
 
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             using var channel = GrpcChannel.ForAddress("http://localhost:5000");
@@ -53,7 +54,7 @@ namespace RequestClient.Controllers
             var reply = await client.RegisterAsync(
                             new RegisterRequest { Description = requestDescription });
             taskResult = reply.Id;
-            ViewBag.TaskResult = "id = " + taskResult;
+            ViewBag.TaskResult = taskResult;
 
             return View();
         }
