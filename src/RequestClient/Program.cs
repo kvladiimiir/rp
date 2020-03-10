@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace RequestClient
 {
@@ -16,11 +18,15 @@ namespace RequestClient
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHostBuilder CreateHostBuilder(string[] args)
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("host.json", true, true)
+                .Build();
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls(config["urls"])
+                .UseStartup<Startup>();
+        }
     }
 }
