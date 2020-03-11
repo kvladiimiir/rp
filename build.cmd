@@ -8,17 +8,21 @@ if exist "%buildPathName%" (
 	exit/b
 )
 
-mkdir "%buildPathName%"   
+mkdir "%buildPathName%"
 
+cd "%buildPathName%"
+
+mkdir config   
+cd ..
 cd src/BackendApi
-dotnet build -o "../../%buildPathName%/BackendApi"
+dotnet publish -o "../../%buildPathName%/BackendApi"
 
 cd ../RequestClient
-dotnet build -o "../../%buildPathName%/RequestClient"           
+dotnet publish -o "../../%buildPathName%/RequestClient"           
  
 cd ../..
 copy start.cmd "%buildPathName%"
 copy stop.cmd "%buildPathName%"
 
 cd config
-copy host.json "../%buildPathName%/RequestClient"
+copy host.json "../%buildPathName%/config"

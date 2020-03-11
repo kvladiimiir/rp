@@ -20,8 +20,10 @@ namespace RequestClient
 
         public static IWebHostBuilder CreateHostBuilder(string[] args)
         {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()) + "/config/host.json";
+            
             IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile("host.json", true, true)
+                .AddJsonFile(path, true, true)
                 .Build();
 
             return WebHost.CreateDefaultBuilder(args)
