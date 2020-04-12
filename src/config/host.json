@@ -1,0 +1,5 @@
+{
+    "client": "http://localhost:5005",
+    "nats": "localhost:6379",
+    "redis": "localhost:4222"
+}

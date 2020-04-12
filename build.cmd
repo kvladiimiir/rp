@@ -13,16 +13,24 @@ mkdir "%buildPathName%"
 cd "%buildPathName%"
 
 mkdir config   
+mkdir nats
 cd ..
+
 cd src/BackendApi
 dotnet publish -o "../../%buildPathName%/BackendApi"
 
 cd ../RequestClient
-dotnet publish -o "../../%buildPathName%/RequestClient"           
- 
+dotnet publish -o "../../%buildPathName%/RequestClient" 
+          
+cd ../JobLogger
+dotnet publish -o "../../%buildPathName%/JobLogger"  
+
 cd ../..
 copy start.cmd "%buildPathName%"
 copy stop.cmd "%buildPathName%"
 
 cd config
 copy host.json "../%buildPathName%/config"
+
+cd ../nats-server
+copy nats-server.exe "../%buildPathName%/nats"

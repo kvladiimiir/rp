@@ -52,7 +52,9 @@ namespace RequestClient.Controllers
             using var channel = GrpcChannel.ForAddress("http://localhost:5000");
             var client = new Job.JobClient(channel);
             var reply = await client.RegisterAsync(
-                            new RegisterRequest { Description = requestDescription });
+                            new RegisterRequest { 
+                                Description = requestDescription 
+                            });
             taskResult = reply.Id;
             ViewBag.TaskResult = taskResult;
 

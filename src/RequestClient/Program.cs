@@ -27,7 +27,7 @@ namespace RequestClient
                 .Build();
 
             return WebHost.CreateDefaultBuilder(args)
-                .UseUrls(config["urls"])
+                .UseUrls(config["client"])
                 .UseStartup<Startup>();
         }
     }
