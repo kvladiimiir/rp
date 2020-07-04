@@ -25,7 +25,7 @@ namespace RequestClient
             IConfiguration config = new ConfigurationBuilder()
                 .AddJsonFile(path, true, true)
                 .Build();
-
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls(config["client"])
                 .UseStartup<Startup>();

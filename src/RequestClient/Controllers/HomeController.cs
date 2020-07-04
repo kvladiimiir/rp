@@ -38,7 +38,7 @@ namespace RequestClient.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendRequestAsync(string requestDescription)
+        public async Task<IActionResult> SendRequestAsync(string requestDescription, string taskData)
         {
             if (requestDescription == null) 
             {
@@ -50,13 +50,31 @@ namespace RequestClient.Controllers
 
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             using var channel = GrpcChannel.ForAddress("http://localhost:5000");
-            var client = new Job.JobClient(channel);
+            var client = new Job.JobClient(channel); 
             var reply = await client.RegisterAsync(
                             new RegisterRequest { 
-                                Description = requestDescription 
+                                Description = requestDescription,
+                                Data = taskData 
                             });
             taskResult = reply.Id;
             ViewBag.TaskResult = taskResult;
+
+            return RedirectToAction( "TextAnalyzer", new { id = taskResult } );
+        }
+
+        public async Task<IActionResult> TextAnalyzerAsync(string id)
+        {
+            string status = String.Empty;
+
+            using var channel = GrpcChannel.ForAddress("http://localhost:5000");
+            var client = new Job.JobClient(channel);
+            var reply = await client.GetProcessingResultAsync( 
+                new GetProcessingResultRequest { 
+                    Id = id 
+                    });
+
+            ViewBag.Status = reply.Status;
+            ViewBag.ResultRanc = reply.Ranc;
 
             return View();
         }

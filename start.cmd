@@ -12,3 +12,6 @@ start dotnet RequestClient.dll
 
 cd ../JobLogger
 start dotnet JobLogger.dll
+
+cd ../TextRancCalc
+start dotnet TextRancCalc.dll

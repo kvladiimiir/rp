@@ -23,7 +23,10 @@ cd ../RequestClient
 dotnet publish -o "../../%buildPathName%/RequestClient" 
           
 cd ../JobLogger
-dotnet publish -o "../../%buildPathName%/JobLogger"  
+dotnet publish -o "../../%buildPathName%/JobLogger"
+
+cd ../TextRancCalc
+dotnet publish -o "../../%buildPathName%/TextRancCalc" 
 
 cd ../..
 copy start.cmd "%buildPathName%"
